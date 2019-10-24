@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         TextView score = this.findViewById(R.id.Score);
         int Score1 = 0;
         Score1++;
+        Score1.toString();
         score.setText(Integer.toString(Score1));
         Random r = new Random();
         int number = r.nextInt(7 - 1) + 1;
@@ -81,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
             tv2.setText("Congratulations !");
             score.setText(Score1);
             Score1++;
+            //Score1.toString#
+            //number_input hint should be 0
 
 
 
