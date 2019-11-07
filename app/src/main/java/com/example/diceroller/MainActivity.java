@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -13,14 +15,11 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    int number_input;
-
-
-    EditText number_input1;
-
 
 
     @Override
@@ -62,34 +61,68 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void on_button_click(View view) {
+    private int points = 0;
 
-        TextView tv = this.findViewById(R.id.textView);
-        TextView tv2 = this.findViewById(R.id.textView2);
-        TextView score = this.findViewById(R.id.Score);
-        int Score1 = 0;
-        Score1++;
-        score.setText(Integer.toString(Score1));
-        Random r = new Random();
-        int number = r.nextInt(7 - 1) + 1;
+    public void roll_the_dice(final View view) {
+
+        final TextView tv = findViewById(R.id.textView);
+        EditText user_input = (EditText) findViewById(R.id.number_input);
+        TextView score = findViewById(R.id.Score);
+        Random rand = new Random();
+        final int number = rand.nextInt(6) + 1;
         tv.setText(Integer.toString(number));
-
-        number_input1 = findViewById(R.id.number_input);
-        number_input = Integer.valueOf(number_input1.getText().toString());
-        if (number_input == r.nextInt(7 - 1) + 1) {
-
-            tv2.setText("Congratulations !");
-            score.setText(Score1);
-            Score1++;
-
-
+        int input = Integer.parseInt((user_input.getText().toString()));
+        if (input < 1 || input > 6) {
+            Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show();
 
         }
-        else{
-            tv2.setText("");
-        }
+            if (input == number) {
+                Toast.makeText(this, "Congratulations", Toast.LENGTH_SHORT).show();
+                points++;
+                score.setText("Score:" + Integer.toString(points));
+            } else {
+                Toast.makeText(this, "Try Again", Toast.LENGTH_SHORT).show();
+            }
 
+            Button play_dice_breakers = findViewById(R.id.button2);
+            play_dice_breakers.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    List<String> Questions = new ArrayList<>();
+                    Questions.add("If you could go anywhere in the world, where would you go?");
+                    Questions.add("If you were stranded on a desert island, what three things would you want to take with you?");
+                    Questions.add("If you could eat only one food for the rest of your life, what would that be?");
+                    Questions.add("If you won a million dollars, what is the first thing you would buy?");
+                    Questions.add("If you could spend the day with one fictional character, who would it be?");
+                    Questions.add("If you found a magic lantern and a genie gave you three wishes, what would you wish?");
+
+                    Random rand2 = new Random();
+                         Questions.get(rand2.nextInt(Questions.size()));
+                         final int number2 = rand2.nextInt(6) + 1;
+                        if (number2 == 1){
+                            tv.setText(Questions.get(0));
+                        }
+                        if (number2 == 2){
+                        tv.setText(Questions.get(1));
+                    }
+                    if (number2 == 3){
+                        tv.setText(Questions.get(2));
+                    }
+                    if (number2 == 4){
+                        tv.setText(Questions.get(3));
+                    }
+                    if (number2 == 5){
+                        tv.setText(Questions.get(4));
+                    }
+                    if (number2 == 6){
+                        tv.setText(Questions.get(5));
+                    }
+                }
+            });
+        }
     }
-}
+
+
+
 
 
